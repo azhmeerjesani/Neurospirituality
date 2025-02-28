@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-2%#ifbcfttb0ju+@q04e((it#dljbym!m=ppcv+yx4qc_&w2ap
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['neurospirituality.pythonanywhere.com']
+ALLOWED_HOSTS = ['neurospirituality.pythonanywhere.com', '127.0.0.1']
 
 
 # Application definition
