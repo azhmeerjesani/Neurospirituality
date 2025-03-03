@@ -17,6 +17,26 @@ def connect_to_backblaze():
     return b2_api
 
 
+def file_exists_in_b2(bucket, file_name):
+    """Check if a file exists in the Backblaze B2 bucket."""
+    try:
+        bucket.get_file_info_by_name(file_name)
+        return True
+    except:
+        return False
+
+
+def delete_file_in_b2(bucket, file_name):
+    """Delete a file in the Backblaze B2 bucket."""
+    try:
+        file_versions = list(bucket.ls(file_name))
+        for file_version, _ in file_versions:
+            bucket.delete_file_version(file_version.id_, file_version.file_name)
+        print(f"Deleted existing file: {file_name}")
+    except Exception as e:
+        print(f"Error deleting {file_name}: {e}")
+
+
 def upload_directory_to_b2(local_directory, b2_bucket_name):
     """Uploads all files from a local directory to a Backblaze B2 bucket, preserving the structure."""
     b2_api = connect_to_backblaze()
@@ -28,9 +48,14 @@ def upload_directory_to_b2(local_directory, b2_bucket_name):
             relative_path = os.path.relpath(local_file_path, local_directory)  # Preserve folder structure
             b2_file_path = relative_path.replace("\\", "/")  # Ensure forward slashes for B2 compatibility
 
-            print(f"Uploading {local_file_path} to B2 as {b2_file_path}...")
+            print(f"Processing: {local_file_path}")
 
-            # Upload and overwrite if the file exists
+            # Check if file exists in B2, delete it if necessary
+            if file_exists_in_b2(bucket, b2_file_path):
+                delete_file_in_b2(bucket, b2_file_path)
+
+            # Upload the file
+            print(f"Uploading {local_file_path} to B2 as {b2_file_path}...")
             bucket.upload_local_file(
                 local_file=local_file_path,
                 file_name=b2_file_path
