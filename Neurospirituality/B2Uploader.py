@@ -1,10 +1,12 @@
 import os
 from b2sdk.v2 import InMemoryAccountInfo, B2Api
+from Neurospirituality.HiddenKeys import backblaze_keys
 
 # Backblaze credentials
-B2_APPLICATION_KEY_ID = "your_key_id"  # Replace with your Key ID
-B2_APPLICATION_KEY = "your_application_key"  # Replace with your Application Key
-B2_BUCKET_NAME = "your_bucket_name"  # Replace with your bucket name
+application_keys = backblaze_keys()
+B2_APPLICATION_KEY_ID = application_keys[1]  # Replace with your Key ID
+B2_APPLICATION_KEY = application_keys[2]  # Replace with your Application Key
+B2_BUCKET_NAME = application_keys[0]  # Replace with your bucket name
 
 
 def connect_to_backblaze():
