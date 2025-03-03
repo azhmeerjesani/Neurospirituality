@@ -4,9 +4,9 @@ from Neurospirituality.HiddenKeys import backblaze_keys
 
 # Backblaze credentials
 application_keys = backblaze_keys()
+B2_BUCKET_NAME = application_keys[0]  # Replace with your bucket name
 B2_APPLICATION_KEY_ID = application_keys[1]  # Replace with your Key ID
 B2_APPLICATION_KEY = application_keys[2]  # Replace with your Application Key
-B2_BUCKET_NAME = application_keys[0]  # Replace with your bucket name
 
 
 def connect_to_backblaze():
